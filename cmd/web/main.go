@@ -1,15 +1,17 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
 	"log"
 	"net/http"
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/hsuBnOediH/Learning_Go/pkg/config"
-	"github.com/hsuBnOediH/Learning_Go/pkg/handlers"
-	"github.com/hsuBnOediH/Learning_Go/pkg/render"
+	"github.com/hsuBnOediH/Learning_Go/internal/config"
+	"github.com/hsuBnOediH/Learning_Go/internal/handlers"
+	"github.com/hsuBnOediH/Learning_Go/internal/models"
+	"github.com/hsuBnOediH/Learning_Go/internal/render"
 )
 
 const portNumber = ":8080"
@@ -19,6 +21,9 @@ var session *scs.SessionManager
 
 // main is the main function
 func main() {
+
+	gob.Register(models.Reservation{})
+
 	// change this to true when in production
 	app.InProduction = false
 
