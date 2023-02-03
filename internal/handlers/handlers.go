@@ -7,10 +7,13 @@ import (
 	"net/http"
 
 	"github.com/hsuBnOediH/Learning_Go/internal/config"
+	"github.com/hsuBnOediH/Learning_Go/internal/driver"
 	"github.com/hsuBnOediH/Learning_Go/internal/forms"
 	"github.com/hsuBnOediH/Learning_Go/internal/helpers"
 	"github.com/hsuBnOediH/Learning_Go/internal/models"
 	"github.com/hsuBnOediH/Learning_Go/internal/render"
+	"github.com/hsuBnOediH/Learning_Go/internal/repository"
+	"github.com/hsuBnOediH/Learning_Go/internal/repository/dbrepo"
 )
 
 // Repo the repository used by the handlers
@@ -19,12 +22,14 @@ var Repo *Repository
 // Repository is the repository type
 type Repository struct {
 	App *config.AppConfig
+	DB  repository.DatabaseRepo
 }
 
 // NewRepo creates a new repository
-func NewRepo(a *config.AppConfig) *Repository {
+func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
+		DB:  dbrepo.NewPostgresRepo(db.SQL, a),
 	}
 }
 
